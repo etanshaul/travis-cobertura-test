@@ -19,5 +19,7 @@ deploy:
   on:
     tags: true
     condition: "$TRAVIS_TAG =~ ^v[0-9]+.*$"
+after_success:
+  - ./gradlew cobertura coveralls
 after_deploy:
   - ./gradlew publishPlugin

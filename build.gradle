@@ -114,16 +114,6 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-release {
-    buildTasks = ['doRelease']
-    // Do not change the tagTemplate value to double quotes or the version will be evaluated before
-    // the SNAPSHOT version is updated to the release version.
-    tagTemplate = 'v$version'
-    git {
-        requireBranch = /^release_v\d+.*$/
-    }
-}
-
 apply plugin: 'net.saliman.cobertura'
 cobertura.coverageFormats = ['html', 'xml']
 cobertura {
@@ -139,21 +129,9 @@ cobertura {
 apply plugin: 'com.github.kt3k.coveralls'
 
 tasks.coveralls {
-    dependsOn 'check'
+    dependsOn 'check', 'cobertura'
 }
 
 // Forces these submodules to have tests executed first so that we can properly
 // merge Cobertura test coverage reports
 test.dependsOn([":google-account-plugin:test", ":google-cloud-tools-plugin:test"])
-
-// We aren't building or doing anything interesting for release.
-// We just update the version and generate the tag as CI will handle deployment.
-task doRelease {
-    doLast {
-        println '===============================!!PLEASE READ!!=================================\n\n' +
-                'IMPORTANT:  The release command will trigger the creation of a new release ' +
-                'in Github, the uploading of binaries to github, and the publishing of our plugin' +
-                'to the IntelliJ plugin repository.\n' +
-                'Hit CTRL+C to cancel.\n'
-    }
-}

@@ -125,12 +125,18 @@ release {
 }
 
 apply plugin: 'net.saliman.cobertura'
-cobertura.coverageFormats = ['html', 'xml']
 cobertura {
+    coverageFormats = ['html', 'xml']
     coverageMergeDatafiles = [
             new File("google-account-plugin/build/cobertura/cobertura.ser"),
             new File("google-cloud-tools-plugin/build/cobertura/cobertura.ser")
     ]
+}
+
+apply plugin: 'com.github.kt3k.coveralls'
+
+tasks.coveralls {
+    dependsOn 'check'
 }
 
 // Forces these submodules to have tests executed first so that we can properly

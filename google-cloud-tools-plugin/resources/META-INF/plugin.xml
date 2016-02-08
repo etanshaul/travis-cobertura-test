@@ -1,0 +1,123 @@
+<idea-plugin version="2">
+  <id>com.google.gct.core</id>
+  <name>Google Cloud Tools</name>
+  <description>Debug Java applications running in the Google cloud from inside IDEA.
+Code inspections for AppEngine Java code.</description>
+  <vendor>Google</vendor>
+  <!-- "version" set by gradle-intellij-plugin -->
+  <!-- "idea-version since-build" set by gradle-intellij-plugin -->
+
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.modules.vcs</depends>
+  <depends>com.intellij.modules.xml</depends>
+  <depends>com.intellij.modules.xdebugger</depends>
+  <depends>org.jetbrains.plugins.gradle</depends>
+  <depends>com.google.gct.login</depends>
+  <depends>Git4Idea</depends>
+
+  <application-components>
+    <component>
+      <implementation-class>com.google.gct.idea.CloudToolsPluginInitializationComponent</implementation-class>
+    </component>
+  </application-components>
+
+  <project-components>
+  </project-components>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <implicitUsageProvider implementation="com.google.gct.idea.appengine.validation.EndpointImplicitUsageProvider"/>
+
+    <checkoutProvider implementation="com.google.gct.idea.git.GcpCheckoutProvider"/>
+    <vcsPopupProvider implementation="com.google.gct.idea.git.GcpQuickListContentProvider"/>
+
+    <programRunner implementation="com.google.gct.idea.debugger.CloudDebuggerRunner"/>
+    <xdebugger.breakpointType implementation="com.google.gct.idea.debugger.CloudLineBreakpointType"/>
+    <projectService serviceImplementation="com.google.gct.idea.debugger.CloudDebugProcessStateSerializer"/>
+
+    <localInspection language="JAVA" shortName="ApiName" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="api.name.name" groupKey="inspections.group.name" enabledByDefault="true" level="ERROR"
+                     implementationClass="com.google.gct.idea.appengine.validation.ApiNameInspection"/>
+
+    <localInspection language="JAVA" shortName="ApiNamespace" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="api.namespace.name" groupKey="inspections.group.name" enabledByDefault="true" level="ERROR"
+                     implementationClass="com.google.gct.idea.appengine.validation.ApiNamespaceInspection"/>
+
+    <localInspection language="JAVA" shortName="ApiParameter" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="api.parameter.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.ApiParameterInspection"/>
+
+    <localInspection language="JAVA" shortName="Constructor" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="constructor.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.ConstructorInspection"/>
+
+    <localInspection language="JAVA" shortName="FullJavaName" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="backend.name.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.FullJavaNameInspection"/>
+
+    <localInspection language="JAVA" shortName="FullMethodName" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="full.method.name.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.FullMethodNameInspection"/>
+
+    <localInspection language="JAVA" shortName="InvalidParameterAnnotations" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="invalid.parameter.annotations.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.InvalidParameterAnnotationsInspection"/>
+
+    <localInspection language="JAVA" shortName="MethodName" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="method.name.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.MethodNameInspection"/>
+
+    <localInspection language="JAVA" shortName="MethodParameterType" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="method.parameter.type.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.MethodParameterTypeInspection"/>
+
+    <localInspection language="JAVA" shortName="MethodReturnType" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="method.return.type.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.MethodReturnTypeInspection"/>
+
+    <localInspection language="JAVA" shortName="NamedResource" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="named.resource.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.NamedResourceInspection"/>
+
+    <localInspection language="JAVA" shortName="ResourceParameter" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="resource.parameter.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.ResourceParameterInspection"/>
+
+    <localInspection language="JAVA" shortName="RestSignature" bundle="messages.EndpointBundle"  hasStaticDescription="true"
+                     key="unique.rest.signature.name" groupKey="inspections.group.name" enabledByDefault="true"
+                     level="ERROR" implementationClass="com.google.gct.idea.appengine.validation.RestSignatureInspection"/>
+  </extensions>
+
+  <extensions defaultExtensionNs="Git4Idea">
+    <GitHttpAuthDataProvider implementation="com.google.gct.idea.git.GcpHttpAuthDataProvider" />
+  </extensions>
+
+  <extensions defaultExtensionNs="com.google.gct.login">
+    <googleLoginMessageExtender
+            implementation="com.google.gct.login.IntelliJGoogleLoginMessageExtender"/>
+  </extensions>
+
+  <actions>
+    <action id="AddSnapshotLocation" class="com.google.gct.idea.debugger.actions.ToggleSnapshotLocationAction"/>
+
+    <group id="EditorGutterCloudDebuggerMenu">
+      <separator/>
+      <reference ref="AddSnapshotLocation"/>
+      <add-to-group group-id="EditorGutterPopupMenu" anchor="last"/>
+    </group>
+
+    <group id="GoogleCloudTools.BreakpointWatchContextMenu">
+      <reference ref="XDebugger.NewWatch"/>
+      <reference ref="XDebugger.EditWatch"/>
+      <reference ref="XDebugger.CopyWatch"/>
+      <reference ref="XDebugger.RemoveWatch"/>
+      <reference ref="XDebugger.RemoveAllWatches"/>
+    </group>
+
+    <action id="GoogleCloudTools.UploadSourceToGCP"
+            class="com.google.gct.idea.git.UploadSourceAction">
+      <add-to-group group-id="Vcs.Import"/>
+    </action>
+  </actions>
+
+</idea-plugin>

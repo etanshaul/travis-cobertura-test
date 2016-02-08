@@ -1,0 +1,68 @@
+<!--
+  ~ Copyright (C) 2014 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<idea-plugin version="2">
+  <id>com.google.gct.login</id>
+  <name>Google Account</name>
+  <vendor>Google</vendor>
+  <!-- "version" set by gradle-intellij-plugin -->
+  <!-- "idea-version since-build" set by gradle-intellij-plugin -->
+
+  <description>
+    Provides Google account setting and authentication for IntelliJ plugins that need it.
+    Not to be installed independently.
+  </description>
+
+
+  <application-components>
+    <component>
+      <implementation-class>com.google.gct.idea.AccountPluginInitializationComponent</implementation-class>
+    </component>
+  </application-components>
+
+  <project-components>
+  </project-components>
+
+  <actions>
+    <action id="GoogleLogin.LoginService"
+            class="com.google.gct.login.ui.GoogleLoginAction"
+            text="Google Login">
+      <add-to-group group-id="MainToolBar" anchor="last"  />
+      <add-to-group group-id="NavBarToolBar" anchor="last"  />
+    </action>
+  </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationConfigurable provider="com.google.gct.stats.GoogleSettingsConfigurableProvider"/>
+    <applicationService serviceInterface="com.google.gct.stats.UsageTrackerProvider"
+                        serviceImplementation="com.google.gct.stats.KeyedExtensionUsageTrackerProvider"/>
+  </extensions>
+
+  <extensions defaultExtensionNs="com.google.gct">
+    <!-- For IJ Community Edition -->
+    <login.usageTracker implementationClass="com.google.gct.stats.GoogleUsageTracker" key="Idea" />
+    <!-- For IJ Ultimate Edition -->
+    <login.usageTracker implementationClass="com.google.gct.stats.GoogleUsageTracker" key="idea" />
+  </extensions>
+
+  <extensionPoints>
+    <extensionPoint name="googleLoginListener" interface="com.google.gct.login.GoogleLoginListener"/>
+    <extensionPoint name="googleLoginMessageExtender" interface="com.google.gct.login.GoogleLoginMessageExtender"/>
+    <extensionPoint name="usageTracker" beanClass="com.google.gct.stats.UsageTrackerExtensionPointBean">
+      <with attribute="implementationClass" implements="com.google.gct.stats.UsageTracker"/>
+    </extensionPoint>
+  </extensionPoints>
+
+</idea-plugin>

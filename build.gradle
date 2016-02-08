@@ -14,8 +14,6 @@ plugins {
     id "com.github.kt3k.coveralls" version "2.6.3"
 }
 
-cobertura.coverageFormats = ['html', 'xml']
-
 allprojects {
     repositories {
         mavenCentral()
@@ -83,6 +81,13 @@ subprojects {
         toolVersion = '2.0.3'
     }
 
+    apply plugin: 'net.saliman.cobertura'
+    configurations.all {
+        resolutionStrategy {
+            force 'junit:junit:4.11'
+        }
+    }
+
     tasks.withType(FindBugs) {
         reports {
             xml.enabled = false
@@ -118,6 +123,19 @@ release {
         requireBranch = /^release_v\d+.*$/
     }
 }
+
+apply plugin: 'net.saliman.cobertura'
+cobertura.coverageFormats = ['html', 'xml']
+cobertura {
+    coverageMergeDatafiles = [
+            new File("google-account-plugin/build/cobertura/cobertura.ser"),
+            new File("google-cloud-tools-plugin/build/cobertura/cobertura.ser")
+    ]
+}
+
+// Forces these submodules to have tests executed first so that we can properly
+// merge Cobertura test coverage reports
+test.dependsOn([":google-account-plugin:test", ":google-cloud-tools-plugin:test"])
 
 // We aren't building or doing anything interesting for release.
 // We just update the version and generate the tag as CI will handle deployment.

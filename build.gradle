@@ -126,24 +126,14 @@ release {
 
 apply plugin: 'net.saliman.cobertura'
 cobertura.coverageFormats = ['html', 'xml']
-//cobertura {
-//    coverageMergeDatafiles = [
-//            new File("${it.projectDir}/google-account-plugin/build/cobertura/cobertura.ser"),
-//            new File("${it.projectDir}/google-cloud-tools-plugin/build/cobertura/cobertura.ser")
-//    ]
-//    rootProject.subprojects.each {
-//        coverageDirs << file("${it.name}/build/classes/main")
-//    }
-//}
-
 cobertura {
+    rootProject.subprojects.each {
+        coverageDirs << file("${it.name}/build/classes/main")
+    }
     coverageMergeDatafiles = [
             new File("${rootProject.rootDir}/google-account-plugin/build/cobertura/cobertura.ser"),
             new File("${rootProject.rootDir}/google-cloud-tools-plugin/build/cobertura/cobertura.ser")
     ]
-    rootProject.subprojects.each {
-        coverageDirs << file("${it.name}/build/classes/main")
-    }
 }
 
 apply plugin: 'com.github.kt3k.coveralls'

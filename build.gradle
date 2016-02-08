@@ -5,13 +5,16 @@ buildscript {
  
     dependencies {
         classpath 'gradle.plugin.org.jetbrains:gradle-intellij-plugin:0.0.35'
-	classpath 'net.saliman:gradle-cobertura-plugin:2.3.0'
     }
 }
 
 plugins {
     id 'net.researchgate.release' version '2.3.4'
+    id "net.saliman.cobertura" version "2.3.0"
+    id "com.github.kt3k.coveralls" version "2.6.3"
 }
+
+cobertura.coverageFormats = ['html', 'xml']
 
 subprojects {
     repositories {

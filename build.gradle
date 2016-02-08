@@ -16,6 +16,12 @@ plugins {
 
 cobertura.coverageFormats = ['html', 'xml']
 
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
 subprojects {
     repositories {
         mavenCentral()

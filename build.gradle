@@ -2,7 +2,7 @@ buildscript {
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
     }
- 
+
     dependencies {
         classpath 'gradle.plugin.org.jetbrains:gradle-intellij-plugin:0.0.35'
     }
@@ -142,26 +142,16 @@ cobertura {
     coverageReportDatafile = file("build/cobertura/cobertura.ser")
     coverageReportDir = file("build/reports/coverage")
 
-//    coverageDirs = []
-//    coverageSourceDirs = []
-//    coverageMergeDatafiles = []
-////
-//    coverageReportDir = [
-//            new File("${rootProject.rootDir}/google-account-plugin/classes/main"),
-//            new File("${rootProject.rootDir}/google-cloud-tools-plugin/classes/main")
-//    ]
+    coverageDirs = []
+    coverageSourceDirs = []
+    coverageMergeDatafiles = []
 
-//    coverageMergeDatafiles = [
-//            new File("${rootProject.rootDir}/google-account-plugin/build/cobertura/cobertura.ser"),
-//            new File("${rootProject.rootDir}/google-cloud-tools-plugin/build/cobertura/cobertura.ser")
-//    ]
-
-//    rootProject.subprojects.each {
-//        coverageFormats = ['html', 'xml']
-//        coverageDirs << file("${it.buildDir}/classes/main")
-//        coverageSourceDirs << file("${it.projectDir}/src/main/java")
-//        coverageMergeDatafiles << file("${it.buildDir}/cobertura/cobertura.ser")
-//    }
+    rootProject.subprojects.each {
+        coverageFormats = ['html', 'xml']
+        coverageDirs << file("${it.buildDir}/classes/main")
+        coverageSourceDirs << file("${it.projectDir}/src/main/java")
+        coverageMergeDatafiles << file("${it.buildDir}/cobertura/cobertura.ser")
+    }
 }
 
 

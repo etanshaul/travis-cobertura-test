@@ -115,22 +115,49 @@ task clean(type: Delete) {
 }
 
 apply plugin: 'net.saliman.cobertura'
-cobertura.coverageFormats = ['html', 'xml']
-cobertura {
-//    rootProject.subprojects.each {
-//        coverageDirs << file("${it.name}/build/classes/main")
-//    }
-    coverageMergeDatafiles = [
-            new File("${rootProject.rootDir}/google-account-plugin/build/cobertura/cobertura.ser"),
-            new File("${rootProject.rootDir}/google-cloud-tools-plugin/build/cobertura/cobertura.ser")
-    ]
-}
-
-//apply plugin: 'org.kt3k.gradle.plugin.CoverallsPlugin'
+//cobertura.coverageFormats = ['html', 'xml']
+//cobertura {
+////    rootProject.subprojects.each {
+////        coverageDirs << file("${it.name}/build/classes/main")
+////    }
+//    coverageMergeDatafiles = [
+//            new File("${rootProject.rootDir}/google-account-plugin/build/cobertura/cobertura.ser"),
+//            new File("${rootProject.rootDir}/google-cloud-tools-plugin/build/cobertura/cobertura.ser")
+//    ]
+//}
 
 tasks.coveralls {
     dependsOn 'check', 'cobertura'
 }
+
+apply plugin: 'net.saliman.cobertura'
+apply plugin: 'com.github.kt3k.coveralls'
+
+subprojects {
+    apply plugin: 'com.github.kt3k.coveralls'
+}
+
+cobertura {
+    coverageFormats = ['html', 'xml']
+    coverageReportDatafile = file("build/cobertura/cobertura.ser")
+    coverageReportDir = file("build/reports/coverage")
+
+    coverageDirs = []
+    coverageSourceDirs = []
+    coverageMergeDatafiles = []
+
+    rootProject.subprojects.each {
+        coverageFormats = ['html', 'xml']
+        coverageDirs << file("${it.buildDir}/classes/main")
+        coverageSourceDirs << file("${it.projectDir}/src/main/java")
+        coverageMergeDatafiles << file("${it.buildDir}/cobertura/cobertura.ser")
+    }
+}
+
+
+//apply plugin: 'org.kt3k.gradle.plugin.CoverallsPlugin'
+
+
 
 coveralls {
     coberturaReportPath = "${rootProject.buildDir}/reports/coverage/coverage.xml"

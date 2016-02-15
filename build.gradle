@@ -142,16 +142,26 @@ cobertura {
     coverageReportDatafile = file("build/cobertura/cobertura.ser")
     coverageReportDir = file("build/reports/coverage")
 
-    coverageDirs = []
-    coverageSourceDirs = []
-    coverageMergeDatafiles = []
+//    coverageDirs = []
+//    coverageSourceDirs = []
+//    coverageMergeDatafiles = []
+//
+//    coverageDirs = [
+//            new File("${rootProject.rootDir}/google-account-plugin/classes/main"),
+//            new File("${rootProject.rootDir}/google-cloud-tools-plugin/classes/main")
+//    ]
 
-    rootProject.subprojects.each {
-        coverageFormats = ['html', 'xml']
-        coverageDirs << file("${it.buildDir}/classes/main")
-        coverageSourceDirs << file("${it.projectDir}/src/main/java")
-        coverageMergeDatafiles << file("${it.buildDir}/cobertura/cobertura.ser")
-    }
+    coverageMergeDatafiles = [
+            new File("${rootProject.rootDir}/google-account-plugin/build/cobertura/cobertura.ser"),
+            new File("${rootProject.rootDir}/google-cloud-tools-plugin/build/cobertura/cobertura.ser")
+    ]
+
+//    rootProject.subprojects.each {
+//        coverageFormats = ['html', 'xml']
+//        coverageDirs << file("${it.buildDir}/classes/main")
+//        coverageSourceDirs << file("${it.projectDir}/src/main/java")
+//        coverageMergeDatafiles << file("${it.buildDir}/cobertura/cobertura.ser")
+//    }
 }
 
 

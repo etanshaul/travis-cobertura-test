@@ -165,4 +165,4 @@ coveralls {
 
 // Forces these submodules to have tests executed first so that we can properly
 // merge Cobertura test coverage reports
-test.dependsOn([":google-account-plugin:test", ":google-cloud-tools-plugin:test"])
+test.dependsOn([":common-lib:test", ":common-test-lib:test", ":google-account-plugin:test", ":google-cloud-tools-plugin:test"])

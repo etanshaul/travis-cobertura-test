@@ -62,6 +62,9 @@ subprojects {
                             '" should not be included in your build')
                 }
             }
+
+            force 'org.ow2.asm:asm:5.0.3'
+            forcedModules = [ 'org.ow2.asm:asm:5.0.3' ]
         }
     }
 
@@ -160,4 +163,4 @@ coveralls {
 
 // Forces these submodules to have tests executed first so that we can properly
 // merge Cobertura test coverage reports
-test.dependsOn([":common-lib:test", ":common-test-lib:test", ":google-account-plugin:test", ":google-cloud-tools-plugin:test"])
+test.dependsOn([":google-account-plugin:test", ":google-cloud-tools-plugin:test", ":common-lib:test", ":common-test-lib:test"])

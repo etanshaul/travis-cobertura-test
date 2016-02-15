@@ -1,22 +1,3 @@
-// Use IntelliJ src structure for now
-sourceSets.main.java.srcDirs = ['src']
-sourceSets.main.resources.srcDirs = ['resources']
-sourceSets.test.java.srcDirs = ['testSrc']
-sourceSets.test.resources.srcDirs = ['testResources']
-
-intellij {
-    pluginName = 'google-cloud-tools'
-    plugins 'Groovy','gradle', 'git4idea', 'properties', 'junit'
-
-    publish {
-        pluginId '8079'
-    }
-}
-
-project.afterEvaluate {
-    prepareSandbox.dependsOn ':google-account-plugin:prepareSandbox'
-}
-
 dependencies {
     compile(project(':google-account-plugin'))
     compile(project(':common-lib'))
@@ -28,13 +9,3 @@ dependencies {
     testCompile(project(':common-test-lib'))
     testRuntime files('../google-account-plugin/lib/google-gct-login-context-ij-pg.jar')
 }
-
-test {
-    testLogging {
-        events "skipped", "failed"
-    }
-    doLast{
-       println "View report at file://$buildDir/reports/tests/index.html"
-    }
-}
-

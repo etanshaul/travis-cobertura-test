@@ -145,8 +145,8 @@ cobertura {
 //    coverageDirs = []
 //    coverageSourceDirs = []
 //    coverageMergeDatafiles = []
-//
-//    coverageDirs = [
+////
+//    coverageReportDir = [
 //            new File("${rootProject.rootDir}/google-account-plugin/classes/main"),
 //            new File("${rootProject.rootDir}/google-cloud-tools-plugin/classes/main")
 //    ]

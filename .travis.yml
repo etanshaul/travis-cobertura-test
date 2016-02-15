@@ -1,5 +1,6 @@
 language: java
+script: ./gradlew clean build cobertura
 jdk:
   - openjdk7
 after_success:
-  - ./gradlew cobertura coveralls
+  - ./gradlew coveralls

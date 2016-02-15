@@ -151,10 +151,10 @@ cobertura {
 //            new File("${rootProject.rootDir}/google-cloud-tools-plugin/classes/main")
 //    ]
 
-    coverageMergeDatafiles = [
-            new File("${rootProject.rootDir}/google-account-plugin/build/cobertura/cobertura.ser"),
-            new File("${rootProject.rootDir}/google-cloud-tools-plugin/build/cobertura/cobertura.ser")
-    ]
+//    coverageMergeDatafiles = [
+//            new File("${rootProject.rootDir}/google-account-plugin/build/cobertura/cobertura.ser"),
+//            new File("${rootProject.rootDir}/google-cloud-tools-plugin/build/cobertura/cobertura.ser")
+//    ]
 
 //    rootProject.subprojects.each {
 //        coverageFormats = ['html', 'xml']

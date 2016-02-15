@@ -1,4 +1,4 @@
 language: java
-script: ./gradlew clean cobertura coveralls
+script: ./gradlew test coberturaReport performCoverageCheck coveralls
 jdk:
   - openjdk7

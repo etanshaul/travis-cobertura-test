@@ -126,10 +126,14 @@ cobertura {
     ]
 }
 
-apply plugin: 'com.github.kt3k.coveralls'
+//apply plugin: 'org.kt3k.gradle.plugin.CoverallsPlugin'
 
 tasks.coveralls {
     dependsOn 'check', 'cobertura'
+}
+
+coveralls {
+    coberturaReportPath = "${rootProject.buildDir}/reports/coverage/coverage.xml"
 }
 
 // Forces these submodules to have tests executed first so that we can properly

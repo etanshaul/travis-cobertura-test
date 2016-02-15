@@ -18,6 +18,11 @@ allprojects {
     repositories {
         mavenCentral()
     }
+
+    allprojects {
+        apply plugin: 'cobertura'
+        apply plugin: 'com.github.kt3k.coveralls'
+    }
 }
 
 subprojects {
@@ -130,13 +135,6 @@ tasks.coveralls {
     dependsOn 'check', 'cobertura'
 }
 
-apply plugin: 'net.saliman.cobertura'
-apply plugin: 'com.github.kt3k.coveralls'
-
-subprojects {
-    apply plugin: 'com.github.kt3k.coveralls'
-}
-
 cobertura {
     coverageFormats = ['html', 'xml']
     coverageReportDatafile = file("build/cobertura/cobertura.ser")
@@ -153,11 +151,6 @@ cobertura {
         coverageMergeDatafiles << file("${it.buildDir}/cobertura/cobertura.ser")
     }
 }
-
-
-//apply plugin: 'org.kt3k.gradle.plugin.CoverallsPlugin'
-
-
 
 coveralls {
     coberturaReportPath = "${rootProject.buildDir}/reports/coverage/coverage.xml"

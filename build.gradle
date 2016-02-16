@@ -120,7 +120,7 @@ task clean(type: Delete) {
 apply plugin: 'net.saliman.cobertura'
 //cobertura.coverageFormats = ['html', 'xml']
 //cobertura {
-////    rootProject.subprojects.each {
+//    rootProject.subprojects.each {
 ////        coverageDirs << file("${it.name}/build/classes/main")
 ////    }
 //    coverageMergeDatafiles = [
